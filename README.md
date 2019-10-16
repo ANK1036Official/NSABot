@@ -1,6 +1,20 @@
 # NSABot
 Discord bot for different fun things.
 
+    ---- Requirements ----
+
+    curl          - `apt install curl`
+    sed           - `apt install sed`
+    WhatWeb       - https://github.com/urbanadventurer/WhatWeb
+    userrecon-py  - https://github.com/decoxviii/userrecon-py
+    jq            - https://github.com/stedolan/jq
+    ffmpeg        - https://ffmpeg.org/download.html#build-linux
+    proxychains4  - https://github.com/rofl0r/proxychains-ng
+
+BreachCompilation can be found on the internet in a couple places. Look for a torrent! Be sure to change the path in the code for query.sh!
+
+
+
     Commands:
     changelog - View latest changelog.
     analyze - Check what a page is running.
