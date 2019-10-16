@@ -1,5 +1,4 @@
 import discord
-import urllib.request
 from urllib.request import urlopen
 import subprocess
 import asyncio
@@ -9,7 +8,6 @@ import magic
 import time
 from discord.ext.commands import Bot
 from discord.ext import commands
-import re
 import glob
 import pypwned
 import json
