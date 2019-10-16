@@ -210,8 +210,8 @@ async def namecheck(ctx, arg1):
                         with open(filename, 'r') as filedata:
                             content_file = filedata.read()
                             await ctx.send("```"+content_file+"```")
-                os.remove(arg1.json)
-                os.remove(arg1.txt)
+                os.remove(arg1 + ".json")
+                os.remove(arg1 + ".txt")
 
 
 
