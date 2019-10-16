@@ -40,9 +40,9 @@ ip2cidr - Get CIDR from IP address.
 joke - Tell a dad joke.
 namecheck - Find accounts belonging to a username.
 search - Get first 20 results from Breach Compilation. (Perms needed)
-spyon - Take a screencap of a stolen camera. (Perms needed)
+spyon - Take a screencap of a open/stolen camera. (Perms needed)
 subdomains - Get subdomains from online sources.
-target - Send a target for ANK to attack. Accepts an IP, email, or url.
+target - Send a target for the admin to attack. Accepts an IP, email, or url.
 ttcheck - Check onion URL title.
 
 More to come...
