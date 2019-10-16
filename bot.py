@@ -317,7 +317,7 @@ async def spyon(ctx, arg1):
             except:
                 pass
             author = ctx.message.author
-            role = discord.utils.get(ctx.guild.roles, name="DadBot Access")
+            role = discord.utils.get(ctx.guild.roles, name="NSABot Access")
             if role in ctx.author.roles:
                 await ctx.send("Screencapping camera...")
                 check = subprocess.getoutput("timeout -k 60 ffmpeg -loglevel fatal -rtsp_transport tcp -i 'rtsp://"+arg1+":554/tcp/av0_0' -r 1 -vframes 1 screencap.png")
@@ -360,7 +360,7 @@ async def search(ctx, arg1):
             except:
                 pass
             author = ctx.message.author
-            role = discord.utils.get(ctx.guild.roles, name="DadBot Access")
+            role = discord.utils.get(ctx.guild.roles, name="NSABot Access")
             if role in ctx.author.roles:
                 await ctx.send("Searching 20 max results for "+arg1+"...")
                 stdoutdata = subprocess.getoutput("/media/root/BigBoiDrive/DBLeaks/BreachCompilation/query.sh "+arg1+" | head -20 | awk '{printf \"%s\\n\", $0}'")
