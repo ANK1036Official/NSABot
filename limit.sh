@@ -1,7 +1,4 @@
 #!/bin/bash
-#Starts the bot, alongside memory and CPU limits.
-while :
-do
-	ulimit -m 24000000
-	python3 bot.py & ./limit.sh
-done
+#Limits CPU usage for the bot
+sleep 8
+cpulimit -l 50 -p `pgrep -f bot.py`;
