@@ -34,7 +34,7 @@ with open("blacklist.json", "r") as blacklist:
     ids = json.load(blacklist)
 with open ("whitelist.json", "r") as whitelist:
     wlids = json.load(whitelist)
-print(wlids)
+#print(wlids)
 helpdata = """
 Commands:
 changelog - View latest changelog.
