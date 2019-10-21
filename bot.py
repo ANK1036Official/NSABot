@@ -1,6 +1,7 @@
 import discord
 from urllib.request import urlopen
 import subprocess
+from subprocess import call
 import asyncio
 import re
 import os
@@ -17,7 +18,11 @@ TOKEN = ''
 HIBP_API = ''
 SHODAN_API = ''
 HASHESORG_API = ''
+TRUECNAM_USER = ""
+TRUECNAM_API = ""
+DEHASHED_API = "EMAIL:KEY"
 
+#Also sorry for the hacky DEHASHED module, was acting all wacky on me parsing the json.
 
 #class DevNull:
 #    def write(self, msg):
@@ -27,20 +32,25 @@ HASHESORG_API = ''
 
 with open("blacklist.json", "r") as blacklist:
     ids = json.load(blacklist)
+with open ("whitelist.json", "r") as whitelist:
+    wlids = json.load(whitelist)
+print(wlids)
 helpdata = """
 Commands:
 changelog - View latest changelog.
 analyze - Check what a page is running.
+callid - Check caller ID of US phone number. (2 requests per minute, so try again later if errors.)
 checkemail - Check email in data breaches. (Best used with "search" command, chances.)
 crack - Attempts to crack a password hash.
+dbsearch - Accesses leaked data to grab info from users. (Whitelist based due to abuse.)
 honeycheck - Checks if IP belongs to a honeypot. (experimental)
 ip2cidr - Get CIDR from IP address.
 joke - Tell a dad joke.
 namecheck - Find accounts belonging to a username.
 search - Get first 20 results from Breach Compilation. (Perms needed)
-spyon - Take a screencap of a open/stolen camera. (Perms needed)
+spyon - Take a screencap of a stolen camera. (Perms needed)
 subdomains - Get subdomains from online sources.
-target - Send a target for the admin to attack. Accepts an IP, email, or url.
+target - Send a target for ANK to attack. Accepts an IP, email, or url.
 ttcheck - Check onion URL title.
 
 More to come...
@@ -53,9 +63,9 @@ changedata = """
 ▒████▌████ ░▒██ ▄████▌ ▒████▌███ ▒███▌███▌ ▒████▌████     ░▒▒▌
 █████▌████ ░████████▀  █████▌███ ███████▀  ▀████████▀     ░░▒▌
 
-Tue 15 Oct 2019 09:33:50 PM EDT
+Mon 21 Oct 2019 01:11:19 AM EDT
 
-Improved code.
+Added DB search function with whitelist.
 """
 
 client = commands.Bot(command_prefix='nsa-')
@@ -277,6 +287,26 @@ async def honeycheck(ctx, arg1):
             if '1.0' in phoney:
                 await ctx.send('Honeypot Probabilty: 100%')
 
+@client.command()
+async def callid(ctx, arg1):
+        if str(ctx.author.id) in(ids):
+            await ctx.send("You are banned from using the bot.")
+            return
+        else:
+            authorid = ctx.author.name
+            descrim = ctx.author.discriminator
+            try:
+                print("Log: callid check on "+arg1+" -- "+authorid+"#"+descrim+" ("+str(ctx.author.id)+") | Server: "+str(ctx.author.guild)+" ("+str(ctx.author.guild.id)+")")
+            except:
+                pass
+            calldata = subprocess.getoutput("curl -s \"https://api.truecnam.net/api/v1?username="+TRUECNAM_USER+"&password="+TRUECNAM_API+"&resp_type=basic&resp_format=json&calling_number="+arg1+"&call_party=terminating\" | jq .name")
+            if calldata != "":
+                await ctx.send("Name: ``"+calldata+"``")
+            elif calldata == "\"\"":
+                await ctx.send("Error.")
+            else:
+                await ctx.send("Error.")
+
 
 @client.command()
 async def crack(ctx, arg1):
@@ -303,6 +333,60 @@ async def crack(ctx, arg1):
                 await ctx.send("```"+hashdata+"```")
 
 @client.command()
+async def dbsearch(ctx, arg1):
+        if str(ctx.author.id) in(ids):
+            await ctx.send("You are banned from using the bot.")
+            return
+        else:
+            if str(ctx.author.id) in(wlids):
+                authorid = ctx.author.name
+                descrim = ctx.author.discriminator
+                testsum = 1999
+                space = 1
+                line = 1
+                charc = 1
+                try:
+                    print("Log: dbsearch used on "+arg1+" -- "+authorid+"#"+descrim+" ("+str(ctx.author.id)+") | Server: "+str(ctx.author.guild)+" ("+str(ctx.author.guild.id)+")")
+                except:
+                    pass
+                await ctx.send("```Checking, please wait...```")
+                pwndata = subprocess.getoutput("curl -s 'https://dehashed.com/search?query=\""+arg1+"\"' -u \""+DEHASHED_API+"\" -H 'Accept: application/json' > "+arg1+".leakdata")
+                leakfile = arg1+".leakdata"
+                data_email = subprocess.getoutput("jq '.[]' "+leakfile)
+                finalout = str(data_email)
+                try:
+                        for i in finalout:
+                            if(i == " "):
+                                space += 1
+                            elif(i == "\n"):
+                                line += 1
+                            else:
+                                charc += 1
+                        if charc > testsum:
+                            f=open("temp_data", "a+")
+                            f.write(finalout)
+                            p = subprocess.Popen("split -l 10 --additional-suffix='.splitdata' temp_data", stdout=subprocess.PIPE, shell=True)
+                            p.communicate()
+                            for splits in os.listdir():
+                                if splits.endswith(".splitdata"):
+                                    with open(splits, 'r') as filedata:
+                                        content_file = filedata.read()
+                                        await ctx.send("```"+content_file+"```")
+                                        os.remove(splits)
+                                else:
+                                    continue
+                except:
+                    finalout == str("Not found or error.")
+                if finalout != "":
+                    await ctx.send("```"+finalout+"```")
+                    os.remove(arg1+".leakdata")
+                else:
+                    await ctx.send("```Not found.```")
+            else:
+                await ctx.send("You are not allowed to use this command.")
+                return
+
+@client.command()
 async def spyon(ctx, arg1):
         if str(ctx.author.id) in(ids):
             await ctx.send("You are banned from using the bot.")
@@ -315,7 +399,7 @@ async def spyon(ctx, arg1):
             except:
                 pass
             author = ctx.message.author
-            role = discord.utils.get(ctx.guild.roles, name="NSABot Access")
+            role = discord.utils.get(ctx.guild.roles, name="DadBot Access")
             if role in ctx.author.roles:
                 await ctx.send("Screencapping camera...")
                 check = subprocess.getoutput("timeout -k 60 ffmpeg -loglevel fatal -rtsp_transport tcp -i 'rtsp://"+arg1+":554/tcp/av0_0' -r 1 -vframes 1 screencap.png")
@@ -358,7 +442,7 @@ async def search(ctx, arg1):
             except:
                 pass
             author = ctx.message.author
-            role = discord.utils.get(ctx.guild.roles, name="NSABot Access")
+            role = discord.utils.get(ctx.guild.roles, name="DadBot Access")
             if role in ctx.author.roles:
                 await ctx.send("Searching 20 max results for "+arg1+"...")
                 stdoutdata = subprocess.getoutput("/media/root/BigBoiDrive/DBLeaks/BreachCompilation/query.sh "+arg1+" | head -20 | awk '{printf \"%s\\n\", $0}'")
