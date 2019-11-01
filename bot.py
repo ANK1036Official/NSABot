@@ -35,6 +35,9 @@ with open("blacklist.json", "r") as blacklist:
 with open ("whitelist.json", "r") as whitelist:
     wlids = json.load(whitelist)
 #print(wlids)
+
+keyban = ['\'', ';', '&', '"', '}', '{', '!', '~', '>', '<', '?', '$', '|'] #Temporary fix
+
 helpdata = """
 Commands:
 changelog - View latest changelog.
@@ -85,7 +88,11 @@ async def changelog(ctx):
 
 @client.command()
 async def analyze(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
                 await ctx.send("You are banned from using the bot.")
                 return
         else:
@@ -108,7 +115,11 @@ async def analyze(ctx, arg1):
 
 @client.command()
 async def target(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -125,7 +136,11 @@ async def target(ctx, arg1):
 
 @client.command()
 async def ip2cidr(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -148,7 +163,11 @@ async def joke(ctx):
 
 @client.command()
 async def checkemail(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -176,7 +195,11 @@ async def checkemail(ctx, arg1):
 
 @client.command()
 async def namecheck(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -228,7 +251,11 @@ async def namecheck(ctx, arg1):
 
 @client.command()
 async def subdomains(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -252,7 +279,11 @@ async def subdomains(ctx, arg1):
 
 @client.command()
 async def honeycheck(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -289,7 +320,11 @@ async def honeycheck(ctx, arg1):
 
 @client.command()
 async def callid(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -310,7 +345,11 @@ async def callid(ctx, arg1):
 
 @client.command()
 async def crack(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -334,7 +373,11 @@ async def crack(ctx, arg1):
 
 @client.command()
 async def dbsearch(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -388,7 +431,11 @@ async def dbsearch(ctx, arg1):
 
 @client.command()
 async def spyon(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -412,7 +459,11 @@ async def spyon(ctx, arg1):
 
 @client.command()
 async def ttcheck(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
@@ -431,7 +482,11 @@ async def ttcheck(ctx, arg1):
 
 @client.command()
 async def search(ctx, arg1):
-        if str(ctx.author.id) in(ids):
+    if any(x in str(arg1) for x in keyban):
+        await ctx.send("Possible exploitation detected...")
+        return
+    else:
+        if str(ctx.author.id) in(ids): # Temporary fix
             await ctx.send("You are banned from using the bot.")
             return
         else:
