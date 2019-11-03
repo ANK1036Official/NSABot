@@ -5,6 +5,7 @@ Discord bot for different fun things.
 
     curl          - `apt install curl`
     sed           - `apt install sed`
+    tor           - `apt install tor`
     WhatWeb       - https://github.com/urbanadventurer/WhatWeb
     userrecon-py  - https://github.com/decoxviii/userrecon-py
     jq            - https://github.com/stedolan/jq
