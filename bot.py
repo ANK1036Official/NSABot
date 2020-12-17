@@ -215,7 +215,7 @@ async def namecheck(ctx, arg1):
                 if os.path.isfile(filename):
                     os.remove(filename)
                 makefile = open(filename, "w+")
-                p = subprocess.Popen("cat "+arg1+".json | jq '.[].url' | sed \'s/\"//g\' > "+filename, stdout=subprocess.PIPE, shell=True)
+                p = subprocess.Popen("cat "+arg1+".json | jq '.[].url' | sed \'s/\"//g\' > "+filename, stdout=subprocess.PIPE, shell=False)
                 p.communicate()
                 testsum = 1999
                 space = 1
@@ -231,7 +231,7 @@ async def namecheck(ctx, arg1):
                         else:
                             charc += 1
                     if charc > testsum:
-                        p = subprocess.Popen("split -l 25 --additional-suffix='.split' "+filename, stdout=subprocess.PIPE, shell=True)
+                        p = subprocess.Popen("split -l 25 --additional-suffix='.split' "+filename, stdout=subprocess.PIPE, shell=False)
                         p.communicate()
                         for splits in os.listdir():
                             if splits.endswith(".split"):
@@ -408,7 +408,7 @@ async def dbsearch(ctx, arg1):
                         if charc > testsum:
                             f=open("temp_data", "a+")
                             f.write(finalout)
-                            p = subprocess.Popen("split -l 10 --additional-suffix='.splitdata' temp_data", stdout=subprocess.PIPE, shell=True)
+                            p = subprocess.Popen("split -l 10 --additional-suffix='.splitdata' temp_data", stdout=subprocess.PIPE, shell=False)
                             p.communicate()
                             for splits in os.listdir():
                                 if splits.endswith(".splitdata"):
